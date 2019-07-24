@@ -1,0 +1,10 @@
+{
+  "location": "eu-west-1",
+  "version": "1",
+
+  "source_image_id": "ami-03a92a323b7e73da1",
+  "target_ami_description": "Windows server 2019 Base with Puppet",
+
+  "vm_type": "t2.medium"
+
+}

@@ -1,0 +1,82 @@
+{
+  "variables": {
+
+    "version": "",
+
+    "location": "",
+
+    "source_image_id": "",
+    "target_image_name": "Windows-base-{{isotime \"2006-01-02\"}}",
+    "target_ami_description": "",
+
+    "vm_type": "",
+
+    "puppet_root": "../puppet",
+
+    "vpc": "vpc-65817700",
+    "subnet": "subnet-a473a4c1"
+
+  },
+  "builders": [{
+    "name": "Windows Base Image",
+    "type": "amazon-ebs",
+    "region": "{{user `location`}}",
+    "source_ami": "{{user `source_image_id`}}",
+    "instance_type": "{{user `vm_type`}}",
+    "ami_name": "{{user `target_image_name` | clean_ami_name}}",
+    "user_data_file":"script_files/base_winrm.ps1",
+    "communicator": "winrm",
+    "winrm_username": "Administrator",
+    "winrm_insecure": true,
+    "winrm_use_ssl": true,
+    "tags": {
+      "Name": "{{user `target_image_name`}}",
+      "OS_Version": "{{user `os_version`}}",
+      "Release": "Latest",
+      "Base_AMI_Name": "{{ .SourceAMIName }}"
+    },
+    "run_tags": {
+      "Name": "{{user `target_image_name`}}"
+    },
+    "run_volume_tags": {
+      "Name": "{{user `target_image_name`}}"
+    },
+    "snapshot_tags": {
+      "Name": "{{user `target_image_name`}}"
+    },
+    "ami_description": "{{user `target_ami_description`}}",
+    "associate_public_ip_address": "true",
+    "vpc_id": "{{user `vpc`}}",
+    "subnet_id": "{{user `subnet`}}"
+  }],
+
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "config_files",
+      "destination": "C:\\Temp\\"
+    },
+    {
+      "type": "file",
+      "source": "{{user `puppet_root`}}/Puppetfile",
+      "destination": "C:\\Temp\\Puppetfile"
+    },
+    {
+      "type": "powershell",
+      "script": "script_files/base_script.ps1"
+    },
+    {
+      "type": "puppet-masterless",
+      "guest_os_type": "windows",
+      "manifest_file": "{{user `puppet_root`}}/manifests/site.pp",
+      "module_paths": ["{{user `puppet_root`}}/modules"]
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "C:/ProgramData/Amazon/EC2-Windows/Launch/Scripts/InitializeInstance.ps1 -Schedule",
+        "C:/ProgramData/Amazon/EC2-Windows/Launch/Scripts/SysprepInstance.ps1 -NoShutdown"
+      ]
+    }
+  ]
+}

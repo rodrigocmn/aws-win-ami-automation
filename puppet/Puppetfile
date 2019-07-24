@@ -1,0 +1,6 @@
+
+# Modules to support tools installation
+mod 'puppetlabs-stdlib', '6.0.0'
+mod 'puppet-archive', '4.1.0'
+
+mod 'puppetlabs-chocolatey', '3.3.0'
