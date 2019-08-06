@@ -13,7 +13,7 @@
 
     "puppet_root": "../puppet",
 
-    "vpc": "vpc-65817700",
+    "vpc": "vpc-057ce5b0b135c12f8",
     "subnet": "subnet-a473a4c1"
 
   },
