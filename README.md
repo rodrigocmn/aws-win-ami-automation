@@ -2,9 +2,9 @@
 
 This example aims to demonstrate how to user Packer and Puppet to create a AWS image.
 
+## AMI Build
 
-
-## Packer Section
+### Packer Section
 
 
 
@@ -24,7 +24,7 @@ This example aims to demonstrate how to user Packer and Puppet to create a AWS i
 * **script_files** - contains the scripts that will be executed 
 
 
-## Puppet Section
+### Puppet Section
 
 
 ```
@@ -35,10 +35,18 @@ This example aims to demonstrate how to user Packer and Puppet to create a AWS i
  └── modules
 ```
 
-## Deploying the Image
+### Deploying the Image
 
 
 
 ```bash
-packer build -var-file=vars/base_vars.json template/base_template.json
+cd packer
+packer build -var-file=vars/base_vars.json -var "subnet=subnet-a473a4c1" -var "vpc=vpc-65817700" template/base_template.json   
 ```
+
+## Testing the AMI
+
+
+### Terraform
+
+### Inspec

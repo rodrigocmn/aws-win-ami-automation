@@ -6,15 +6,17 @@
     "location": "",
 
     "source_image_id": "",
-    "target_image_name": "Windows-base-{{isotime \"2006-01-02\"}}",
+    "target_image_name": "Windows-base-test",
     "target_ami_description": "",
 
     "vm_type": "",
 
     "puppet_root": "../puppet",
 
-    "vpc": "vpc-057ce5b0b135c12f8",
-    "subnet": "subnet-a473a4c1"
+    "vpc": "vpc-65817700",
+    "subnet": "subnet-a473a4c1",
+
+    "devopsuser_password": "password123"
 
   },
   "builders": [{
@@ -23,12 +25,12 @@
     "region": "{{user `location`}}",
     "source_ami": "{{user `source_image_id`}}",
     "instance_type": "{{user `vm_type`}}",
-    "ami_name": "{{user `target_image_name` | clean_ami_name}}",
+    "ami_name": "{{user `target_image_name` | clean_ami_name}}-{{user `version`}}",
     "user_data_file":"script_files/base_winrm.ps1",
     "communicator": "winrm",
     "winrm_username": "Administrator",
     "winrm_insecure": true,
-    "winrm_use_ssl": true,
+    "winrm_use_ssl": false,
     "tags": {
       "Name": "{{user `target_image_name`}}",
       "OS_Version": "{{user `os_version`}}",
@@ -70,6 +72,15 @@
       "guest_os_type": "windows",
       "manifest_file": "{{user `puppet_root`}}/manifests/site.pp",
       "module_paths": ["{{user `puppet_root`}}/modules"]
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "$userpassword=\"{{user `devopsuser_password`}}\"",
+        "$securepassword=ConvertTo-SecureString $userpassword -AsPlainText -Force",
+        "New-LocalUser -Name \"devopsuser\" -Password $securepassword",
+        "Add-LocalGroupMember -Group \"Administrators\" -Member \"devopsuser\""
+      ]
     },
     {
       "type": "powershell",

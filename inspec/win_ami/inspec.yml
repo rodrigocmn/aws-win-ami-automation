@@ -1,0 +1,10 @@
+name: win_ami
+title: InSpec Profile
+maintainer: Rodrigo Nascimento
+copyright: Rodrigo Nascimento
+copyright_email: rodrigocmn@gmail.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile to test Windows AMI
+version: 0.1.0
+supports:
+  platform: os

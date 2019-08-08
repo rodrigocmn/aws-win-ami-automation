@@ -22,5 +22,4 @@ $ENV:SSL_CERT_FILE = $CACertFile
 
 # Install puppet modules for Packer's Puppet Masterless provisioner
 Start-Process -Wait -NoNewWindow "cmd.exe" "/c C:\PROGRA~1\PUPPET~1\Puppet\puppet\bin\r10k puppetfile install --puppetfile C:\Temp\Puppetfile --moduledir C:\Temp\packer-puppet-masterless\module-0 --verbose"
-\Puppetfile --moduledir C:\Temp\packer-puppet-masterless\module-0 --verbose
 

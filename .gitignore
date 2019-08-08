@@ -82,3 +82,6 @@ packer_cache/
 # Packer temp certs
 packer/*.pem
 
+### Inspec
+
+inspec/win_ami/inspec.lock
