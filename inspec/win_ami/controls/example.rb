@@ -18,6 +18,6 @@ control "Puppet Agent" do
   desc "Check if Puppet Agent is installed."
   describe package("Puppet Agent (64-bit)") do
     it { should be_installed }
-    its('version') { should eq '6.7.2' }
+    its('version') { should eq '6.7.3' }
   end
 end
