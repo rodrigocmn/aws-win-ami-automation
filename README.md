@@ -49,4 +49,9 @@ packer build -var-file=vars/base_vars.json -var "subnet=subnet-a473a4c1" -var "v
 
 ### Terraform
 
+
+```bash
+ssh-keygen -t rsa -m PEM -f ~/.ssh/id_rsa_test -q -N ""
+```
+
 ### Inspec
